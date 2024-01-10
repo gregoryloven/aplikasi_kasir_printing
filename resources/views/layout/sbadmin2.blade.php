@@ -50,7 +50,7 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="/product">
                     <i class="fas fa-shopping-bag"></i>
                     <span>Produk</span></a>
             </li>

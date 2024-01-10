@@ -40,6 +40,7 @@ class ProductController extends Controller
         $data->kode = $request->kode;
         $data->nama = $request->nama;
         $data->harga = $request->harga;
+        $data->save();
 
         return redirect()->route('product.index')->with('success', 'Data produk berhasil ditambah');
      
@@ -76,7 +77,12 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $product->kode = $request->kode;
+        $product->nama = $request->nama;
+        $product->harga = $request->harga;
+        $product->save();
+
+        return redirect()->route('product.index')->with('success', 'Data produk berhasil diubah');
     }
 
     /**
@@ -87,6 +93,18 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $product->delete();
+        return redirect()->route('product.index')->with('success', 'Data produk berhasil dihapus');
+
+    }
+
+    public function EditForm(Request $request)
+    {
+        $id = $request->get("id");
+        $data = Product::find($id);
+
+        return response()->json(array(
+            'status'=>'oke',
+            'msg'=>view('product.EditForm',compact('data'))->render()),200);
     }
 }

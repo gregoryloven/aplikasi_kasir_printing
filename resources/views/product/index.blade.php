@@ -1,20 +1,14 @@
 @extends('layout.sbadmin2')
 
-@push('css')
-<style>
-    #myTable td {text-align: center; vertical-align: middle;}
-</style>
-@endpush
-
 @section('title')
     Daftar Produk
 @endsection
 
 @section('content')
 
-@if(session('status'))
+@if(session('success'))
     <div class="alert alert-success">
-        {{ session('status') }}
+        {{ session('success') }}
     </div>
 @endif
 @if(session('error'))
@@ -29,7 +23,7 @@
 <div class="modal fade" id="modalCreate" tabindex="-1" role="basic" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content" >
-            <form role="form" method="POST" action="{{ url('products') }}" enctype="multipart/form-data">
+            <form role="form" method="POST" action="{{ url('product') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
@@ -82,7 +76,7 @@
                         <th width="5%">No</th>
                         <th>Kode</th>
                         <th>Nama</th>
-                        <th>Harga Wilayah</th>
+                        <th>Harga Satuan</th>
                         <th width="15%"><i class="fa fa-cog"></i></th>
                     </tr>
                 </thead>
@@ -90,7 +84,7 @@
                     @php $i = 0; @endphp
                     @foreach($data as $d)
                     @php $i += 1; @endphp
-                    <tr>
+                    <tr style="text-align: center;">
                         <td>@php echo $i; @endphp</td>
                         <td st>{{$d->kode}}</td>
                         <td st>{{$d->nama}}</td>
@@ -102,7 +96,7 @@
                                 <a href="#modalEdit" data-toggle="modal" class="btn btn-icon btn-warning" onclick="EditForm({{ $d->id }})"><i class="fa fa-pen"></i></a>
 
                                 <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
-                                <button type="button" class="btn btn-icon btn-danger" data-id="{{ $d->id }}"><i class="fa fa-trash"></i></button>                                   
+                                <button type="submit" class="btn btn-icon btn-danger" data-id="{{ $d->id }}" onclick="if(!confirm('apakah anda yakin ingin menghapus data ini?')) return false"><i class="fa fa-trash"></i></button>                                   
                             </form>
                         </td>
                     </tr>
@@ -131,6 +125,7 @@ function EditForm(id)
     }
   });
 }
+
 </script>
 
 @endsection
