@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CashierController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 
@@ -20,3 +21,6 @@ Route::get('/', function () {
 
 Route::resource('product', ProductController::class);
 Route::post('/product/EditForm', [ProductController::class, 'EditForm'])->name('product.EditForm');
+
+
+Route::resource('cashier', CashierController::class);

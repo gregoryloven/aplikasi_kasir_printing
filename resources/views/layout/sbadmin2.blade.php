@@ -56,7 +56,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="/cashier">
                     <i class="fas fa-shopping-cart"></i>
                     <span>Kasir</span></a>
             </li>
