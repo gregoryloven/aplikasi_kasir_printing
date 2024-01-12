@@ -17,7 +17,9 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('kode')->unique();
             $table->string('nama');
-            $table->integer('harga');
+            $table->integer('harga_beli');
+            $table->integer('harga_jual');
+            $table->string('satuan');
             $table->timestamps();
         });
     }
