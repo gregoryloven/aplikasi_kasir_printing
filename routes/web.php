@@ -24,3 +24,6 @@ Route::post('/product/EditForm', [ProductController::class, 'EditForm'])->name('
 
 
 Route::resource('cashier', CashierController::class);
+
+Route::get('addTransaction', [CashierController::class, 'create']);
+

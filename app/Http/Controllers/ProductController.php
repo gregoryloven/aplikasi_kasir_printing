@@ -39,7 +39,7 @@ class ProductController extends Controller
         $data = new Product();
         $data->kode = $request->kode;
         $data->nama = $request->nama;
-        $data->harga = $request->harga;
+        $data->harga_jual = $request->harga;
         $data->save();
 
         return redirect()->route('product.index')->with('success', 'Data produk berhasil ditambah');
