@@ -41,8 +41,12 @@
                             <input type="text" class="form-control" id='nama' name='nama' placeholder="Nama Produk" required>
                         </div>
                         <div class="form-group">
-                            <label>Harga Satuan</label>
-                            <input type="number" class="form-control" id='harga' name='harga' min=0 required>
+                            <label>Harga Beli</label>
+                            <input type="number" class="form-control" id='harga_beli' name='harga_beli' min=0 required>
+                        </div>
+                        <div class="form-group">
+                            <label>Harga Jual</label>
+                            <input type="number" class="form-control" id='harga_jual' name='harga_jual' min=0 required>
                         </div>
                     </div>
                 </div>
@@ -76,7 +80,8 @@
                         <th width="5%">No</th>
                         <th>Kode</th>
                         <th>Nama</th>
-                        <th>Harga Satuan</th>
+                        <th>Harga Beli</th>
+                        <th>Harga Jual (pcs)</th>
                         <th width="15%"><i class="fa fa-cog"></i></th>
                     </tr>
                 </thead>
@@ -88,7 +93,8 @@
                         <td>@php echo $i; @endphp</td>
                         <td st>{{$d->kode}}</td>
                         <td st>{{$d->nama}}</td>
-                        <td st>{{$d->harga}}</td>
+                        <td st>{{$d->harga_beli}}</td>
+                        <td st>{{$d->harga_jual}}</td>
                         <td>
                             <form id="delete-form-{{ $d->id }}" action="{{ route('product.destroy', $d->id) }}" method="POST">
                                 @csrf

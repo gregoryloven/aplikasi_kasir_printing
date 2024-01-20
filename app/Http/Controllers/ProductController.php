@@ -39,7 +39,9 @@ class ProductController extends Controller
         $data = new Product();
         $data->kode = $request->kode;
         $data->nama = $request->nama;
-        $data->harga_jual = $request->harga;
+        $data->harga_beli = $request->harga_beli;
+        $data->harga_jual = $request->harga_jual;
+        $data->satuan = 'pcs';
         $data->save();
 
         return redirect()->route('product.index')->with('success', 'Data produk berhasil ditambah');
@@ -79,7 +81,8 @@ class ProductController extends Controller
     {
         $product->kode = $request->kode;
         $product->nama = $request->nama;
-        $product->harga = $request->harga;
+        $product->harga_beli = $request->harga_beli;
+        $product->harga_jual = $request->harga_jual;
         $product->save();
 
         return redirect()->route('product.index')->with('success', 'Data produk berhasil diubah');

@@ -23,12 +23,12 @@
     <div class="card-header py-3"></div>
     <div class="card-body">
 
-    <a href="{{url('addTransaction')}}">
-                <input type="button" class="btn btn-outline-info float-left" value=" + Tambah Penjualan Baru" />
-               </a>
+        <a href="{{url('addTransaction')}}">
+            <button type="button" class="btn btn-info float-left"><i class="fa fa-plus-circle"></i> Tambah Penjualan Baru</button>
+        </a>
 
-               <br>
-               <br>
+        <br>
+        <br>
 
         <div class="table-responsive">
             <table class="table table-bordered" id="myTable">
