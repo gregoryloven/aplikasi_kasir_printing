@@ -300,11 +300,7 @@ document.addEventListener('input', function (event) {
     }
 });
 
-    // Fungsi untuk menghapus baris dari tabel
-    function removeRow(button) {
-        var row = button.parentNode.parentNode;
-        row.parentNode.removeChild(row);
-    }
+ 
 
       /* Dengan Rupiah */
     var dengan_rupiah = document.getElementById('dengan-rupiah');
@@ -383,6 +379,31 @@ document.addEventListener('input', function (event) {
 
 });
 
+   // Fungsi untuk menghapus baris dari tabel
+   function removeRow(button) {
+    
+    var row = button.parentNode.parentNode;
+    var productName = row.querySelector('td:nth-child(3)').textContent; // Assuming the product name is in the third column
+
+    // Find the index of the product in products_data
+    var productIndex = products_data.findIndex(function(product) {
+        return product.nama === productName;
+    });
+
+    if (productIndex !== -1) {
+        // Remove the product from products_data
+        products_data.splice(productIndex, 1);
+    }
+
+    // Remove the row from the table
+    row.parentNode.removeChild(row);
+
+    updateTotal();
+
+
+    console.log(products_data);
+
+    }
 
 
 function hitungKembalian(bayar){
