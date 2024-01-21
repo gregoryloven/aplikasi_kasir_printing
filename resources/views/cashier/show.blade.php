@@ -4,41 +4,66 @@
     Detail Produk
 @endsection
 
-
-
-
 @section('content')
 
-<div class="card shadow mb-4">
-    <div class="card-header py-3"></div>
-    <div class="card-body">
+<div class="card invoice">
+    <div class="card-header p-4 p-md-5 border-bottom-0 bg-primary text-white">
+        <div class="row justify-content-between align-items-center">
+            <div class="col-12 col-lg-auto mb-5 mb-lg-0 text-center text-lg-start">
+                <!-- Invoice branding-->
+                <img class="invoice-brand-img rounded-circle mb-4">
+                <div class="h2 text-white mb-0">Detail Penjualan</div>
+            </div>
+            <div class="col-12 col-lg-auto text-center text-lg-end">
+                <!-- Invoice details-->
+                <!-- <div class="h3 text-white">Nota</div> -->
+                #{{ $data->no_nota }}
+                <br>
+                {{ \Carbon\Carbon::parse($data->tanggal)->format('d-m-Y') }}
+                <br>
+                {{ $data->user->name }}
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4 p-md-5">
+        <!-- Invoice table-->
         <div class="table-responsive">
-            <p>No Nota  <b>{{$data->no_nota}}</b></p>
-            <p> Tanggal 
-           {{ \Carbon\Carbon::parse($data->tanggal)->format('d-m-Y') }}
-            </p>
-
-            @foreach($data_detail as $d)
-            <ul>
-                <li>{{$d['nama']}} - {{$d['qty']}} - Rp. {{ number_format($d['sub_total'], 2) }}</li>
-            </ul>
-            @endforeach
-
-            <p>Total   Rp. {{ number_format($data->grand_total, 2) }}  </p>
-            <p>Bayar   Rp. {{ number_format($data->bayar, 2) }}  </p>
-            <p>Kembali   Rp. {{ number_format($data->kembali, 2) }}  </p>
-
-
-
+            <table class="table table-borderless mb-0">
+                <thead class="border-bottom">
+                    <tr class="small text-uppercase text-muted">
+                        <th scope="col">Nama Produk</th>
+                        <th class="text-end" scope="col">Qty</th>
+                        <th class="text-end" scope="col">Sub Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Invoice item 1-->
+                    @foreach($data_detail as $d)
+                    <tr class="border-bottom">
+                        <td><div class="fw-bold">{{ $d['nama'] }}</div></td>
+                        <td class="text-end fw-bold">{{ $d['qty'] }}</td>
+                        <td class="text-end fw-bold">Rp. {{ number_format($d['sub_total'], 0) }}</td>
+                    </tr>
+                    <!-- Invoice subtotal-->
+                    <tr>
+                        <td class="text-end pb-0" colspan="2"><div class="text-uppercase small fw-700 text-muted">Total:</div></td>
+                        <td class="text-end pb-0"><div class="h5 mb-0 fw-700">Rp. {{ number_format($data->grand_total, 0) }}</div></td>
+                    </tr>
+                    <!-- Invoice tax column-->
+                    <tr>
+                        <td class="text-end pb-0" colspan="2"><div class="text-uppercase small fw-700 text-muted">Bayar:</div></td>
+                        <td class="text-end pb-0"><div class="h5 mb-0 fw-700">Rp. {{ number_format($data->bayar, 0) }}</div></td>
+                    </tr>
+                    <!-- Invoice total-->
+                    <tr>
+                        <td class="text-end pb-0" colspan="2"><div class="text-uppercase small fw-700 text-muted">Kembali:</div></td>
+                        <td class="text-end pb-0"><div class="h5 mb-0 fw-700 text-green">Rp. {{ number_format($data->kembali, 0) }}</div></td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
-
-@endsection
-
-@section('javascript')
-<script>
-
-</script>
 
 @endsection

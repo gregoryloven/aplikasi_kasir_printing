@@ -7,6 +7,7 @@ use App\Models\Transaction;
 use App\Models\TransactionDetail;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Auth;
 
 class CashierController extends Controller
 {
@@ -42,7 +43,6 @@ class CashierController extends Controller
      */
     public function store(Request $request)
     {
-
         $data = new Transaction;
         
         $tanggalHariIni = Carbon::now();
@@ -50,7 +50,7 @@ class CashierController extends Controller
 
         // $total = $request->input('total');
         // $kembalian = $request->input('kembalian');
-
+        $data->user_id = Auth::user()->id;
         $data->no_nota = Transaction::generate_code($formatTanggal);
         $data->tanggal = Carbon::now();
         $data->grand_total = $request->input('total');
@@ -77,9 +77,7 @@ class CashierController extends Controller
         }
         
 
-        return redirect()->route('cashier.index')->with('success', 'Data Penjuualan berhasil ditambah');
-        
-
+        return redirect()->route('cashier.index')->with('success', 'Data Penjualan berhasil ditambah');
         
     }
 

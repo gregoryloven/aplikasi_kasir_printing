@@ -42,11 +42,11 @@
                         </div>
                         <div class="form-group">
                             <label>Harga Beli</label>
-                            <input type="number" class="form-control" id='harga_beli' name='harga_beli' min=0 required>
+                            <input type="text" class="form-control input-harga_beli" id='harga_beli' name='harga_beli' min=0 required>
                         </div>
                         <div class="form-group">
                             <label>Harga Jual</label>
-                            <input type="number" class="form-control" id='harga_jual' name='harga_jual' min=0 required>
+                            <input type="text" class="form-control input-harga_jual" id='harga_jual' name='harga_jual' min=0 required>
                         </div>
                     </div>
                 </div>
@@ -71,52 +71,79 @@
 </div>
 
 <div class="card shadow mb-4">
-    <div class="card-header py-3"></div>
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-bordered" id="myTable">
-                <thead>
-                    <tr style="text-align: center;">
-                        <th width="5%">No</th>
-                        <th>Kode</th>
-                        <th>Nama</th>
-                        <th>Harga Beli</th>
-                        <th>Harga Jual (pcs)</th>
-                        <th width="15%"><i class="fa fa-cog"></i></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @php $i = 0; @endphp
-                    @foreach($data as $d)
-                    @php $i += 1; @endphp
-                    <tr style="text-align: center;">
-                        <td>@php echo $i; @endphp</td>
-                        <td st>{{$d->kode}}</td>
-                        <td st>{{$d->nama}}</td>
-                        <td st>{{$d->harga_beli}}</td>
-                        <td st>{{$d->harga_jual}}</td>
-                        <td>
-                            <form id="delete-form-{{ $d->id }}" action="{{ route('product.destroy', $d->id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <a href="#modalEdit" data-toggle="modal" class="btn btn-icon btn-warning" onclick="EditForm({{ $d->id }})"><i class="fa fa-pen"></i></a>
+    <div class="card-header py-3">Daftar Produk</div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="myTable">
+                    <thead>
+                        <tr style="text-align: center;">
+                            <th width="5%">No</th>
+                            <th>Kode</th>
+                            <th>Nama</th>
+                            <th>Harga Beli</th>
+                            <th>Harga Jual (pcs)</th>
+                            <th width="15%"><i class="fa fa-cog"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @php $i = 0; @endphp
+                        @foreach($data as $d)
+                        @php $i += 1; @endphp
+                        <tr style="text-align: center;">
+                            <td>@php echo $i; @endphp</td>
+                            <td st>{{$d->kode}}</td>
+                            <td st>{{$d->nama}}</td>
+                            <td st>{{ number_format($d->harga_beli, 0, ',', '.') }}</td>
+                            <td st>{{ number_format($d->harga_jual, 0, ',', '.') }}</td>
+                            <td>
+                                <form id="delete-form-{{ $d->id }}" action="{{ route('product.destroy', $d->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <a href="#modalEdit" data-toggle="modal" class="btn btn-icon btn-warning" onclick="EditForm({{ $d->id }})"><i class="fa fa-pen"></i></a>
 
-                                <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
-                                <button type="submit" class="btn btn-icon btn-danger" data-id="{{ $d->id }}" onclick="if(!confirm('apakah anda yakin ingin menghapus data ini?')) return false"><i class="fa fa-trash"></i></button>                                   
-                            </form>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                                    <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
+                                    <button type="submit" class="btn btn-icon btn-danger" data-id="{{ $d->id }}" onclick="if(!confirm('apakah anda yakin ingin menghapus data ini?')) return false"><i class="fa fa-trash"></i></button>                                   
+                                </form>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
 </div>
 
 @endsection
 
 @section('javascript')
 <script>
+
+$(document).ready(function() {
+    $(".input-harga_beli").on("input", function() {
+        let inputValueBeli = $(this).val();
+
+        inputValueBeli = inputValueBeli.replace(/[^0-9]/g, '');
+
+        let formattedValueBeli = formatNumber(inputValueBeli);
+
+        $(this).val(formattedValueBeli);
+    });
+
+    $(".input-harga_jual").on("input", function() {
+        let inputValueJual = $(this).val();
+
+        inputValueJual = inputValueJual.replace(/[^0-9]/g, '');
+
+        let formattedValueJual = formatNumber(inputValueJual);
+
+        $(this).val(formattedValueJual);
+    });
+
+
+    function formatNumber(number) {
+        return new Intl.NumberFormat('id-ID').format(number);
+    }
+});
 
 function EditForm(id)
 {

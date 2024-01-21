@@ -17,18 +17,13 @@
     </div>
 @endif
 
-
+<a href="{{url('addTransaction')}}">
+    <button type="button" class="btn btn-info float-left"><i class="fa fa-plus-circle"></i> Tambah Penjualan Baru</button>
+</a><br><br>
 
 <div class="card shadow mb-4">
-    <div class="card-header py-3"></div>
-    <div class="card-body">
-
-        <a href="{{url('addTransaction')}}">
-            <button type="button" class="btn btn-info float-left"><i class="fa fa-plus-circle"></i> Tambah Penjualan Baru</button>
-        </a>
-
-        <br>
-        <br>
+    <div class="card-header py-3">Daftar Penjualan</div>
+        <div class="card-body">
 
         <div class="table-responsive">
             <table class="table table-bordered" id="myTable">
@@ -38,7 +33,7 @@
                         <th>Kode</th>
                         <th>Tanggal</th>
                         <th>Total</th>
-                        <th>Action</th>
+                        <th width="15%"><i class="fa fa-cog"></i></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,7 +45,7 @@
                         <td st>{{$d->no_nota}}</td>
                         <td st>{{ \Carbon\Carbon::parse($d->tanggal)->format('d-m-Y') }}</td>
                         <td st>
-                        Rp. {{ number_format($d->grand_total, 2) }}    
+                        Rp. {{ number_format($d->grand_total, 0) }}    
                         </td>
                         <td>
                         <a class="btn btn-icon btn-info" data-id="{{ $d->id }}" 
@@ -65,13 +60,5 @@
         </div>
     </div>
 </div>
-
-@endsection
-
-@section('javascript')
-<script>
-
-
-</script>
 
 @endsection

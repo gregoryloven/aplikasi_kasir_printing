@@ -13,6 +13,11 @@ class Transaction extends Model
     protected $primaryKey = 'id';
     protected $guarded = [];
 
+    public function user()
+    {
+    	return $this->belongsTo(User::class, 'user_id');
+    }
+    
     public function transaction_details()
     {
         return $this->hasMany(TransactionDetail::class, "transaction_id", "id");

@@ -39,8 +39,8 @@ class ProductController extends Controller
         $data = new Product();
         $data->kode = $request->kode;
         $data->nama = $request->nama;
-        $data->harga_beli = $request->harga_beli;
-        $data->harga_jual = $request->harga_jual;
+        $data->harga_beli = str_replace('.', '', $request->harga_beli);
+        $data->harga_jual = str_replace('.', '', $request->harga_jual);
         $data->satuan = 'pcs';
         $data->save();
 

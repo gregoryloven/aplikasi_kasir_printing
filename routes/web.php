@@ -19,6 +19,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+route::middleware(['auth'])->group(function(){
+
+Route::get('/', [ProductController::class, 'index']);
+
 Route::resource('product', ProductController::class);
 Route::post('/product/EditForm', [ProductController::class, 'EditForm'])->name('product.EditForm');
 
@@ -27,3 +31,8 @@ Route::resource('cashier', CashierController::class);
 
 Route::get('addTransaction', [CashierController::class, 'create']);
 
+});
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
