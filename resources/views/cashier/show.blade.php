@@ -31,35 +31,39 @@
             <table class="table table-borderless mb-0">
                 <thead class="border-bottom">
                     <tr class="small text-uppercase text-muted">
-                        <th scope="col">Nama Produk</th>
-                        <th class="text-end" scope="col">Qty</th>
-                        <th class="text-end" scope="col">Sub Total</th>
+                        <th width="10%">No</th>
+                        <th width="40%" scope="col">Nama Produk</th>
+                        <th width="20%" class="text-end" scope="col">Qty</th>
+                        <th width="25%"class="text-end" scope="col">Sub Total</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Invoice item 1-->
+                    @php $i = 0; @endphp
                     @foreach($data_detail as $d)
+                    @php $i += 1; @endphp
+                    <!-- Invoice item 1-->
                     <tr class="border-bottom">
+                        <td>@php echo $i; @endphp</td>
                         <td><div class="fw-bold">{{ $d['nama'] }}</div></td>
                         <td class="text-end fw-bold">{{ $d['qty'] }}</td>
                         <td class="text-end fw-bold">Rp. {{ number_format($d['sub_total'], 0) }}</td>
                     </tr>
+                    @endforeach
                     <!-- Invoice subtotal-->
                     <tr>
-                        <td class="text-end pb-0" colspan="2"><div class="text-uppercase small fw-700 text-muted">Total:</div></td>
+                        <td class="text-end pb-0" colspan="3"><div class="text-uppercase small fw-700 text-muted"> Total: </div></td>
                         <td class="text-end pb-0"><div class="h5 mb-0 fw-700">Rp. {{ number_format($data->grand_total, 0) }}</div></td>
                     </tr>
                     <!-- Invoice tax column-->
                     <tr>
-                        <td class="text-end pb-0" colspan="2"><div class="text-uppercase small fw-700 text-muted">Bayar:</div></td>
+                        <td class="text-end pb-0" colspan="3"><div class="text-uppercase small fw-700 text-muted">Bayar:</div></td>
                         <td class="text-end pb-0"><div class="h5 mb-0 fw-700">Rp. {{ number_format($data->bayar, 0) }}</div></td>
                     </tr>
                     <!-- Invoice total-->
                     <tr>
-                        <td class="text-end pb-0" colspan="2"><div class="text-uppercase small fw-700 text-muted">Kembali:</div></td>
+                        <td class="text-end pb-0" colspan="3"><div class="text-uppercase small fw-700 text-muted">Kembali:</div></td>
                         <td class="text-end pb-0"><div class="h5 mb-0 fw-700 text-green">Rp. {{ number_format($data->kembali, 0) }}</div></td>
                     </tr>
-                    @endforeach
                 </tbody>
             </table>
         </div>

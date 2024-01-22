@@ -54,7 +54,7 @@ class CashierController extends Controller
         $data->no_nota = Transaction::generate_code($formatTanggal);
         $data->tanggal = Carbon::now();
         $data->grand_total = $request->input('total');
-        $data->bayar = $request->get('bayar');
+        $data->bayar = str_replace('.', '',$request->get('bayar'));
         $data->kembali = $request->input('kembalian');
 
         $data->save(); 

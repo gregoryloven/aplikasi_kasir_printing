@@ -30,7 +30,8 @@
                 <option value="">Pilih Produk</option>
                 @foreach($products as $p)
                         <option value="{{ $p->id }}"
-                             data-harga="{{ $p->harga_jual }}"
+                             data-harga="{{ number_format($p->harga_jual, 0, ',', '.') }}"
+    
                              data-kode = "{{ $p->kode}}"
                              data-id = "{{$p->id}}"
                         > 
@@ -68,7 +69,7 @@
 <div class="row mt-4">
 <div class="col-6 mr-2 ml-2" style="background: green; height:100px">
     <h2 class="mt-4" style="text-align: center; color: white;" id="h2-total">Total : Rp.0</h2>
-    <label id="label-terbilang">Terbilang : nol Rupiah </label>
+    <!-- <label id="label-terbilang">Terbilang : nol Rupiah </label> -->
 
 </div>
 
@@ -104,7 +105,7 @@
                 </label>
                 </div>
                 <div class="col-6">
-                <input type="number" class="form-control" id="bayar" name="bayar" style="width: 65%; margin-left: 90px;" onchange="hitungKembalian(this.value)">
+                <input type="text" class="form-control input-diterima" id="bayar" name="bayar" style="width: 65%; margin-left: 90px;" onchange="hitungKembalian(this.value)">
 
                 </div>
            </div>
@@ -118,7 +119,7 @@
                 </label>
                 </div>
                 <div class="col-6">
-                <input type="number" disabled class="form-control" id="kembali" name="kembali" style="width: 65%; margin-left: 90px;" value="">
+                <input type="text" disabled class="form-control" id="kembali" name="kembali" style="width: 65%; margin-left: 90px;" value="">
 
                 </div> 
            </div>
@@ -189,9 +190,9 @@ document.addEventListener("DOMContentLoaded", function () {
             cellNo.innerHTML = tableBody.rows.length; // Nomor baris
             cellKode.innerHTML =  selectedProductCode; // Ganti dengan kode produk yang sesuai
             cellNama.innerHTML = selectedProductName; // Nama produk dari select option
-            cellHarga.innerHTML = '<input type="number" disabled class="form-control input-harga" name="harga[]" value="' + selectedProductPrice + '">'
-            cellJumlah.innerHTML = '<input type="number" class="form-control input-jumlah" name="jumlah[]">'; // Input jumlah
-            cellSubtotal.innerHTML = '<input type="number" disabled class="form-control input-subtotal" name="subtotal[]">';
+            cellHarga.innerHTML = '<input type="text" disabled class="form-control input-harga" name="harga[]" value="' + selectedProductPrice + '">'
+            cellJumlah.innerHTML = '<input type="text" class="form-control input-jumlah" name="jumlah[]">'; // Input jumlah
+            cellSubtotal.innerHTML = '<input type="text" disabled class="form-control input-subtotal" name="subtotal[]">';
             cellActions.innerHTML = '<button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">Hapus</button>'; // Tombol hapus
             
         }
@@ -211,7 +212,12 @@ document.addEventListener("DOMContentLoaded", function () {
         var row = inputElement.closest('tr');
 
         var cellHarga = row.querySelector('td input.input-harga');
+
         var hargaValue = cellHarga.value;
+        
+        hargaValue = hargaValue.replace(/[^0-9]/g, '');
+
+        var hargaValue2 = formatNumber(hargaValue);
 
         var cellSubtotal = row.querySelector('td input.input-subtotal');
 
@@ -219,11 +225,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // Dapatkan harga dan jumlah
-    var harga = parseFloat(cellHarga.value); // Ambil nilai dari input harga
+    var harga = parseFloat(hargaValue.value); // Ambil nilai dari input harga
     var jumlah = parseFloat(cellJumlah.value) || 0; // Jumlah yang diisi pengguna
 
     // Hitung subtotal
-    var subtotal = harga * jumlah;
+    var subtotal = hargaValue * jumlah;
 
     var productData = {
                 kode: selectedProductCode,
@@ -263,19 +269,29 @@ document.addEventListener("DOMContentLoaded", function () {
     var cellHarga = row.querySelector('td input.input-harga');
     var hargaValue = cellHarga.value;
 
+     
+    hargaValue = hargaValue.replace(/[^0-9]/g, '');
+
+
+    var hargaValue2 = formatNumber(hargaValue);
+
+
+
     var cellSubtotal = row.querySelector('td input.input-subtotal');
 
     var cellJumlah = row.querySelector('td input.input-jumlah');
 
 
     // Dapatkan harga dan jumlah
-    var harga = parseFloat(cellHarga.value); // Ambil nilai dari input harga
+    var harga = parseFloat(hargaValue.value); // Ambil nilai dari input harga
     var jumlah = parseFloat(cellJumlah.value) || 0; // Jumlah yang diisi pengguna
 
     // Hitung subtotal
-    var subtotal = harga * jumlah;
+    var subtotal = hargaValue * jumlah;
+    // cellSubtotal.value = subtotal;
 
-    cellSubtotal.value = subtotal;
+
+    cellSubtotal.value = subtotal.toLocaleString('id-ID');
 
     updateTotal();
 
@@ -290,6 +306,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 }
 
+function formatNumber(number) {
+        return new Intl.NumberFormat('id-ID').format(number);
+    }
 
 
 
@@ -411,16 +430,18 @@ function hitungKembalian(bayar){
 updateTotal();
 
 
-    var kembali = 0;
+    var kembali = "";
+
+    bayar = bayar.replace(/[^0-9]/g, '');
 
     kembali = bayar - total; 
 
     var kembalian = document.getElementById('kembali');
 
-    kembalian.value = kembali; 
+    kembalian.value = kembali.toLocaleString('id-ID'); 
 
       // Set the value of the hidden kembalian input field
-      var kembalianInput = document.getElementById('kembalianInput');
+    var kembalianInput = document.getElementById('kembalianInput');
     kembalianInput.value = kembali;
 
     // Set the value of the hidden total input field
@@ -437,20 +458,41 @@ function updateTotal() {
 
         // Ambil semua elemen subtotal
         var subtotalElements = document.querySelectorAll('.input-subtotal');
+
+
         subtotalElements.forEach(function (subtotalElement) {
-            total += parseFloat(subtotalElement.value) || 0;
+            
+            subtotalElement = subtotalElement.value.replace(/[^0-9]/g, '');
+
+            total += parseFloat(subtotalElement) || 0;
         });
 
         // Update elemen input total
         var dengan_rupiah = document.getElementById('dengan-rupiah');
-        dengan_rupiah.value = total;
+        dengan_rupiah.value = total.toLocaleString('id-ID');
 
         var h2Total = document.getElementById('h2-total');
-    h2Total.textContent = 'Total: Rp. ' +  total; // Ubah sesuai kebutuhan
+        h2Total.textContent = 'Total: Rp. ' +  total.toLocaleString('id-ID'); // Ubah sesuai kebutuhan
 
-    var terbilang = document.getElementById('label-terbilang');
+    // var terbilang = document.getElementById('label-terbilang');
 
     }
+
+
+    $(".input-diterima").on("input", function() {
+        let inputValueDiterima = $(this).val();
+
+        inputValueDiterima = inputValueDiterima.replace(/[^0-9]/g, '');
+
+        let formattedValueDiterima = formatNumber(inputValueDiterima);
+
+        $(this).val(formattedValueDiterima);
+    });
+
+    function formatNumber(number) {
+        return new Intl.NumberFormat('id-ID').format(number);
+    }
+
 
 </script>
 
