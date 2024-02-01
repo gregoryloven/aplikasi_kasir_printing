@@ -17,8 +17,12 @@
                 <input type="text" class="form-control" value="{{$data->nama}}" id='nama' name='nama' required>
             </div>
             <div class="form-group">
-                <label>Harga Satuan</label>
-                <input type="number" class="form-control" value="{{$data->harga}}" id='harga' name='harga' min=0 required>
+                <label>Harga Beli</label>
+                <input type="number" class="form-control" value="{{$data->harga_beli}}" id='harga_beli' name='harga_beli' min=0 required>
+            </div>
+            <div class="form-group">
+                <label>Harga Jual</label>
+                <input type="number" class="form-control" value="{{$data->harga_jual}}" id='harga_jual' name='harga_jual' min=0 required>
             </div>
         </div>
     </div>
