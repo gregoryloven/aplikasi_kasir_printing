@@ -57,6 +57,11 @@ class CashierController extends Controller
         $data->bayar = str_replace('.', '',$request->get('bayar'));
         $data->kembali = $request->input('kembalian');
 
+        // Memeriksa apakah nominal bayar lebih kecil dari grand total
+        if ($data->bayar < $data->grand_total) {
+            return back()->with('error', 'Nominal bayar tidak mencukupi');
+        }
+
         $data->save(); 
 
         $transactionId = $data->id;
