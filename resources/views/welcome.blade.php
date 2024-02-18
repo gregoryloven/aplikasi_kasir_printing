@@ -49,6 +49,11 @@
             height: auto; /* Pertahankan rasio aspek */
             margin-bottom: 20px; /* Tambahkan beberapa ruang di bawah logo */
         }
+        .btn-login {
+            display: block; /* Mengubah tombol menjadi elemen block */
+            margin-top: 80px; /* Menambahkan margin atas untuk memberikan jarak dari elemen di atasnya */
+        }
+
     </style>
 </head>
 <body class="antialiased">
@@ -57,7 +62,7 @@
             <div class="row">
                 <div class="col-md-12">
                     @if (Route::has('login'))
-                        <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
+                        <div class="hidden fixed top-10 right-0 px-6 py-4 sm:block">
                             @auth
                                 <a href="{{ url('/product') }}" class="btn btn-primary font-weight-bold" style="font-size: 24px; padding: 16px 32px;">Home</a>
                             @else
