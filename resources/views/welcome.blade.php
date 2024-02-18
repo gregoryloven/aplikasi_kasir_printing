@@ -50,7 +50,7 @@
             margin-bottom: 20px; /* Tambahkan beberapa ruang di bawah logo */
         }
         .btn-login {
-            margin-top: 430px; /* Menambahkan margin atas untuk memberikan jarak dari elemen di atasnya */
+            margin-top: 550px; /* Menambahkan margin atas untuk memberikan jarak dari elemen di atasnya */
         }
 
     </style>
