@@ -21,7 +21,7 @@ Route::get('/', function () {
 
 route::middleware(['auth'])->group(function(){
 
-Route::get('/', [ProductController::class, 'index']);
+// Route::get('/', [ProductController::class, 'index']);
 
 Route::resource('product', ProductController::class);
 Route::post('/product/EditForm', [ProductController::class, 'EditForm'])->name('product.EditForm');
