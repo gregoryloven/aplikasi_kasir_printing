@@ -65,7 +65,7 @@
                             @auth
                                 <a href="{{ url('/product') }}" class="btn btn-primary font-weight-bold" style="font-size: 24px; padding: 16px 32px;">Home</a>
                             @else
-                                <a href="{{ route('login') }}" class="btn btn-warning font-weight-bold btn-login" style="font-size: 24px; padding: 16px 32px;">Log in</a>
+                                <a href="{{ url('/product') }}" class="btn btn-warning font-weight-bold btn-login" style="font-size: 24px; padding: 16px 32px;">Log in</a>
                                 <!-- Jika Anda ingin menampilkan tombol pendaftaran, tambahkan kode berikut -->
                                 <!-- <a href="{{ route('register') }}" class="btn btn-secondary ml-4">Register</a> -->
                             @endauth
